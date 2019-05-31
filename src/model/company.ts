@@ -2,8 +2,13 @@ import Room from './room';
 import * as assert from 'assert';
 
 export default class Company {
+  //X宽度
   width: number;
+
+  //Y宽度
   height: number;
+
+  //公司房间信息
   roomList: Room[][] = [];
 
   constructor(width: number = 40, height: number = 40) {
@@ -26,6 +31,9 @@ export default class Company {
     this.roomList[room.positionX][room.positionY] = room;
   }
 
+  /**
+   * 打印房间信息，X表示空，O代表入住
+   */
   print() {
     let desc = '';
     for (let i = 0; i < this.width; i++) {
