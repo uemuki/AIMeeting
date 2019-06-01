@@ -16,8 +16,8 @@ export default class Result {
     return result;
   }
 
-  static error(code: string, message: string, data: Object) {
-    let result = new Result(true, '', '', data);
+  static error(message: string, code?: string, data?: Object) {
+    let result = new Result(false, message, code, data);
     return result;
   }
 }

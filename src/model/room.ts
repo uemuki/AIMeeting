@@ -1,11 +1,11 @@
-import Pointer from './point';
+import Point from './point';
 
 export default interface Room {
   //房间位置X
-  start: Pointer;
+  start: Point;
 
   //房间位置Y
-  end: Pointer;
+  end: Point;
 
   //房间限制人数
   limit: number;

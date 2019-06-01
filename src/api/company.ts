@@ -11,8 +11,7 @@ router.get('/query', async ctx => {
 
 router.post('/addroom', async ctx => {
   let room: Room = ctx.request.body;
-  addRoom(room);
-  ctx.body = Result.success(null);
+  ctx.body = addRoom(room);
 });
 
 export default router;
