@@ -1,25 +1,18 @@
 import * as Router from 'koa-router';
-import Company from '../model/company';
-import { DB } from '../common/db';
-import * as assert from 'assert';
 import Room from '../model/room';
+import Result from '../model/result';
+import { queryRoom, addRoom } from '../service/company';
 
 let router = new Router();
-router.get('/init', async ctx => {
-  DB.company = new Company();
-  ctx.body = 'init success';
-});
 
 router.get('/query', async ctx => {
-  ctx.body = DB.company.print();
+  ctx.body = Result.success(queryRoom());
 });
 
-router.get('/addroom', async ctx => {
-  let x = Math.floor(Math.random() * 40);
-  let y = Math.floor(Math.random() * 40);
-  let room = new Room(x, y, 4, 'TEST');
-  DB.company.addMeetingRoom(room);
-  ctx.body = DB.company.print();
+router.post('/addroom', async ctx => {
+  let room: Room = ctx.request.body;
+  addRoom(room);
+  ctx.body = Result.success(null);
 });
 
 export default router;

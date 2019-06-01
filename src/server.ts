@@ -3,6 +3,7 @@ import * as Router from 'koa-router';
 import * as fs from 'fs';
 import { DB } from './common/db';
 import Company from './model/company';
+import * as koaBody from 'koa-body';
 
 const app = new Koa();
 const router = new Router();
@@ -14,8 +15,9 @@ fs.readdirSync(apiPath).forEach(file => {
   router.use(`/${sections[0]}`, require(`./api/${file}`).default.routes());
 });
 
+app.use(koaBody());
 app.use(router.routes()).use(router.allowedMethods());
-DB.company = new Company();
+DB.company = { width: 100, height: 100, roomList: [] };
 
 app.listen(3000);
 
