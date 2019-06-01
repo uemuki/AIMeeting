@@ -12,7 +12,7 @@ const router = new Router();
 const apiPath = require('path').join(__dirname, '/api');
 fs.readdirSync(apiPath).forEach(file => {
   let sections = file.split('.');
-  router.use(`/${sections[0]}`, require(`./api/${file}`).default.routes());
+  router.use(`/api/${sections[0]}`, require(`./api/${file}`).default.routes());
 });
 
 app.use(koaBody());
