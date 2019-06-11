@@ -33,7 +33,10 @@ function checkRoomConflict(room: Room): boolean {
   DB.company.roomList = DB.company.roomList || [];
 
   function getCenter(room: Room): Point {
-    return { x: (room.start.x + room.end.x) / 2, y: room.start.y + room.end.y };
+    return {
+      x: (room.start.x + room.end.x) / 2,
+      y: (room.start.y + room.end.y) / 2
+    };
   }
 
   function getWidth(room: Room): number {
@@ -50,13 +53,13 @@ function checkRoomConflict(room: Room): boolean {
   for (let temp of DB.company.roomList) {
     let tempCenter: Point = getCenter(temp);
     let tempWidth = getWidth(temp);
-    let tempHeigh = getHeight(temp);
+    let tempHeight = getHeight(temp);
 
     if (
       Math.abs(roomCenter.x - tempCenter.x) <
         Math.abs(roomWidth + tempWidth) / 2 &&
       Math.abs(roomCenter.y - tempCenter.y) <
-        Math.abs(roomHeight + tempHeigh) / 2
+        Math.abs(roomHeight + tempHeight) / 2
     ) {
       return true;
     }
