@@ -1,6 +1,7 @@
 import Room from '../model/room';
 import Point from '../model/point';
 import { DB } from '../common/db';
+import Result from '../model/result';
 
 /**
  * 添加会议室信息
@@ -8,13 +9,12 @@ import { DB } from '../common/db';
  */
 export function addRoom(room: Room) {
   let conflict = checkRoomConflict(room);
-  console.log('conflict', conflict);
   if (conflict) {
-    return false;
+    return Result.error('房间位置与已有房间冲突');
   }
 
   DB.company.roomList.push(room);
-  return DB.company.roomList;
+  return Result.success(room);
 }
 
 /**
@@ -22,7 +22,7 @@ export function addRoom(room: Room) {
  * 查询会议室信息
  */
 export function queryRoom(): Room[] {
-  return [];
+  return DB.company.roomList;
 }
 
 /**
@@ -33,10 +33,8 @@ export function queryRoom(): Room[] {
 function checkRoomConflict(room: Room): boolean {
   let roomList: Room[] = DB.company.roomList;
   for (let i = 0; i < roomList.length; i++) {
-    console.log('in for', i);
     const se = compare(roomList[i].end, room.start) === Direction.LeftTop;
     const es = compare(roomList[i].start, room.end) === Direction.RightBottom;
-    console.log('se:', se, 'es:', es);
     if (se && es) {
       return true;
     }
